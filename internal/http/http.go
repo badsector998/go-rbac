@@ -3,8 +3,8 @@ package http
 import (
 	"net/http"
 
-	"github.com/badsector998/go-rbac/domain"
 	"github.com/badsector998/go-rbac/internal/app"
+	"github.com/badsector998/go-rbac/internal/domain"
 	"github.com/go-chi/chi/v5"
 )
 

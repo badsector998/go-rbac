@@ -14,13 +14,15 @@ type BurjoGroup struct {
 
 type Burjo struct {
 	gorm.Model
-	Name      string
-	Address   string
-	Employees []Employee
+	Name         string
+	Address      string
+	Employees    []Employee
+	BurjoGroupID uint
 }
 
 type Employee struct {
 	gorm.Model
-	Name   string
-	Origin string
+	Name    string
+	Origin  string
+	BurjoID uint
 }

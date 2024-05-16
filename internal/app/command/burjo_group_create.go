@@ -3,7 +3,7 @@ package command
 import (
 	"context"
 
-	"github.com/badsector998/go-rbac/domain"
+	"github.com/badsector998/go-rbac/internal/domain"
 	"github.com/badsector998/go-rbac/internal/repository"
 )
 
@@ -16,5 +16,5 @@ func NewBurjoGroupCreate(repo repository.BurjoGroupRepository) *BurjoGroupCreate
 }
 
 func (h *BurjoGroupCreateHandler) Handle(ctx context.Context, bg domain.BurjoGroup) error {
-	return nil
+	return h.repo.Create(ctx, bg)
 }

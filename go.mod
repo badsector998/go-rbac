@@ -3,6 +3,7 @@ module github.com/badsector998/go-rbac
 go 1.19
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/go-chi/chi/v5 v5.0.12
 	go.uber.org/mock v0.4.0
 	gorm.io/driver/postgres v1.5.7

@@ -5,6 +5,7 @@ import (
 
 	"github.com/badsector998/go-rbac/internal/adapter"
 	"github.com/badsector998/go-rbac/internal/app/command"
+	"github.com/badsector998/go-rbac/internal/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -28,10 +29,19 @@ type Commands struct {
 func NewApp() *App {
 
 	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
+
 	if err != nil {
 		log.Panic("error opening db")
 	}
+
+	db.AutoMigrate(
+		&domain.BurjoGroup{},
+		&domain.Burjo{},
+		&domain.Employee{},
+	)
 
 	burjoGroupRepo := adapter.NewBurjoGroupRepository(db)
 	burjoRepo := adapter.NewBurjoRepository(db)

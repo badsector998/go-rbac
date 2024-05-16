@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/badsector998/go-rbac/domain"
+	"github.com/badsector998/go-rbac/internal/domain"
 )
 
 type EmployeeRepository interface {

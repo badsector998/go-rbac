@@ -3,7 +3,7 @@ package adapter
 import (
 	"context"
 
-	"github.com/badsector998/go-rbac/domain"
+	"github.com/badsector998/go-rbac/internal/domain"
 	"github.com/badsector998/go-rbac/internal/repository"
 	"gorm.io/gorm"
 )
