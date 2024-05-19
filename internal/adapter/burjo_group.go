@@ -51,9 +51,25 @@ func (r *BurjoGroupAdapter) Delete(ctx context.Context, id uint) error {
 }
 
 func (r *BurjoGroupAdapter) ReadByID(ctx context.Context, id uint) (domain.BurjoGroup, error) {
-	return domain.BurjoGroup{}, nil
+	c := transaction.TransactionFromCtx(ctx, r.db)
+
+	var res domain.BurjoGroup
+	err := c.Model(&domain.BurjoGroup{}).Find(&res, "id = ?", id).Error
+	if err != nil {
+		return domain.BurjoGroup{}, err
+	}
+
+	return res, nil
 }
 
 func (r *BurjoGroupAdapter) ReadAll(ctx context.Context) ([]domain.BurjoGroup, error) {
-	return nil, nil
+	c := transaction.TransactionFromCtx(ctx, r.db)
+
+	var res []domain.BurjoGroup
+	err := c.Model(&domain.BurjoGroup{}).Find(&res).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }

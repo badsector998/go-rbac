@@ -26,7 +26,7 @@ func (t *TransactionAdapter) Execute(ctx context.Context, fn func(context.Contex
 	}
 
 	if tx.Error != nil {
-		return fmt.Errorf("failed to start transaction: %s", tx.Error)
+		return fmt.Errorf("failed to start transaction: %w", tx.Error)
 	}
 
 	ctx = transaction.TransactionToCtx(ctx, tx)
@@ -34,8 +34,13 @@ func (t *TransactionAdapter) Execute(ctx context.Context, fn func(context.Contex
 	err := fn(ctx)
 	if err != nil {
 		tx.Rollback()
-		return fmt.Errorf("failed to commit. rolling back: %s", err.Error())
+		return fmt.Errorf("failed to commit. rolling back: %w", err)
 	}
 
-	return tx.Commit().Error
+	err = tx.Commit().Error
+	if err != nil {
+		return fmt.Errorf("failed to commit. error on commiting: %w", err)
+	}
+
+	return nil
 }

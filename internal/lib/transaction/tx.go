@@ -28,10 +28,10 @@ func CheckTransactionFromTx(ctx context.Context) *gorm.DB {
 func TransactionFromCtx(ctx context.Context, val *gorm.DB) *gorm.DB {
 	tx, ok := ctx.Value(txKey{}).(*gorm.DB)
 	if !ok {
-		return val
+		return val.WithContext(ctx)
 	}
 
-	return tx
+	return tx.WithContext(ctx)
 }
 
 func TransactionToCtx(ctx context.Context, db *gorm.DB) context.Context {

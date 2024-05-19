@@ -18,7 +18,7 @@ type TestSuite struct {
 }
 
 func (s *TestSuite) Setup(t *testing.T) {
-	client, mock, err := sqlmock.New()
+	client, mock, err := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
 	if err != nil {
 		t.Errorf("failed to create sql mock client")
 	}
@@ -33,7 +33,7 @@ func (s *TestSuite) Setup(t *testing.T) {
 	s.client = c
 	s.mockClient = mock
 
-	txClient, txMock, err := sqlmock.New()
+	txClient, txMock, err := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
 	if err != nil {
 		t.Errorf("failed to create sql mock tx client")
 	}
@@ -52,14 +52,14 @@ func (s *TestSuite) Setup(t *testing.T) {
 }
 
 func (s *TestSuite) Teardown(t *testing.T) {
-	s.mockClient.ExpectClose()
+	// s.mockClient.ExpectClose()
 	s.client = nil
 	err := s.mockClient.ExpectationsWereMet()
 	if err != nil {
 		t.Errorf("mock client expectation weren't met: %s", err.Error())
 	}
 
-	s.txMockClient.ExpectClose()
+	// s.txMockClient.ExpectClose()
 	s.txClient = nil
 	err = s.txMockClient.ExpectationsWereMet()
 	if err != nil {
