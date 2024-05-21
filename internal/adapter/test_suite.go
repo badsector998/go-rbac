@@ -25,7 +25,9 @@ func (s *TestSuite) Setup(t *testing.T) {
 
 	c, err := gorm.Open(postgres.New(postgres.Config{
 		Conn: client,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		t.Errorf("failed to open gorm client")
 	}
@@ -40,7 +42,9 @@ func (s *TestSuite) Setup(t *testing.T) {
 
 	cTx, err := gorm.Open(postgres.New(postgres.Config{
 		Conn: txClient,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		t.Errorf("failed to open gorm client tx")
 	}
