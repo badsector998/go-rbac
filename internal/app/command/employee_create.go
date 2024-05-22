@@ -16,5 +16,5 @@ func NewEmployeeCreate(repo repository.EmployeeRepository) *EmployeeCreateHandle
 }
 
 func (h *EmployeeCreateHandler) Handle(ctx context.Context, e domain.Employee) error {
-	return nil
+	return h.repo.Create(ctx, e)
 }

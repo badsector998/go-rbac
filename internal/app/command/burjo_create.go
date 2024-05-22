@@ -16,5 +16,5 @@ func NewBurjoCreate(repo repository.BurjoRepository) *BurjoCreateHandler {
 }
 
 func (h *BurjoCreateHandler) Handle(ctx context.Context, b domain.Burjo) error {
-	return nil
+	return h.repo.Create(ctx, b)
 }

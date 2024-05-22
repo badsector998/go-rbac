@@ -7,9 +7,9 @@ import (
 )
 
 type EmployeeRepository interface {
-	Create(ctx context.Context, b domain.Employee) error
-	Update(ctx context.Context, b domain.Employee) error
-	Delete(ctx context.Context, id uint) error
+	Create(ctx context.Context, e domain.Employee) error
+	Update(ctx context.Context, e domain.Employee) error
+	Delete(ctx context.Context, e domain.Employee) error
 	ReadByID(ctx context.Context, id uint) (domain.Employee, error)
 	ReadAll(ctx context.Context) ([]domain.Employee, error)
 }
