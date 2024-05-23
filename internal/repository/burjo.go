@@ -6,6 +6,8 @@ import (
 	"github.com/badsector998/go-rbac/internal/domain"
 )
 
+//go:generate mockgen -source ./burjo.go -destination ./mock/burjo_mock.go
+
 type BurjoRepository interface {
 	Create(ctx context.Context, b domain.Burjo) error
 	Update(ctx context.Context, b domain.Burjo) error

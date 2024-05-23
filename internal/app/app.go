@@ -5,6 +5,7 @@ import (
 
 	"github.com/badsector998/go-rbac/internal/adapter"
 	"github.com/badsector998/go-rbac/internal/app/command"
+	"github.com/badsector998/go-rbac/internal/app/query"
 	"github.com/badsector998/go-rbac/internal/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -16,14 +17,28 @@ type App struct {
 }
 
 type Queries struct {
+	BurjoGroupReadByID *query.BurjoGroupReadByIDHandler
+	BurjoGroupReadAll  *query.BurjoGroupReadAllHandler
+
+	BurjoReadByID *query.BurjoReadByIDHandler
+	BurjoReadAll  *query.BurjoReadAllHandler
+
+	EmployeeReadByID *query.EmployeeReadByIDHandler
+	EmployeeReadAll  *query.EmployeeReadAllHandler
 }
 
 type Commands struct {
 	BurjoGroupCreate *command.BurjoGroupCreateHandler
+	BurjoGroupUpdate *command.BurjoGroupUpdateHandler
+	BurjoGroupDelete *command.BurjoGroupDeleteHandler
 
 	BurjoCreate *command.BurjoCreateHandler
+	BurjoUpdate *command.BurjoUpdateHandler
+	BurjoDelete *command.BurjoDeleteHandler
 
 	EmployeeCreate *command.EmployeeCreateHandler
+	EmployeeUpdate *command.EmployeeUpdateHanlder
+	EmployeeDelete *command.EmployeeDeleteHandler
 }
 
 func NewApp() *App {
@@ -48,13 +63,28 @@ func NewApp() *App {
 	employeeRepo := adapter.NewEmployeeRepository(db)
 
 	return &App{
-		Queries: Queries{},
+		Queries: Queries{
+			BurjoGroupReadByID: query.NewBurjoGroupReadByID(burjoGroupRepo),
+			BurjoGroupReadAll:  query.NewBurjoGroupReadAll(burjoGroupRepo),
+
+			BurjoReadByID: query.NewBurjoReadByID(burjoRepo),
+			BurjoReadAll:  query.NewBurjoReadAll(burjoRepo),
+
+			EmployeeReadByID: query.NewEmployeeReadByID(employeeRepo),
+			EmployeeReadAll:  query.NewEmployeeReadAll(employeeRepo),
+		},
 		Commands: Commands{
 			BurjoGroupCreate: command.NewBurjoGroupCreate(burjoGroupRepo),
+			BurjoGroupUpdate: command.NewBurjoGroupUpdate(burjoGroupRepo),
+			BurjoGroupDelete: command.NewBurjoGroupDelete(burjoGroupRepo),
 
 			BurjoCreate: command.NewBurjoCreate(burjoRepo),
+			BurjoUpdate: command.NewBurjoUpdate(burjoRepo),
+			BurjoDelete: command.NewBurjoDelete(burjoRepo),
 
 			EmployeeCreate: command.NewEmployeeCreate(employeeRepo),
+			EmployeeUpdate: command.NewEmployeeUpdate(employeeRepo),
+			EmployeeDelete: command.NewEmployeeDelete(employeeRepo),
 		},
 	}
 }
