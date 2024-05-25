@@ -25,6 +25,10 @@ type Queries struct {
 
 	EmployeeReadByID *query.EmployeeReadByIDHandler
 	EmployeeReadAll  *query.EmployeeReadAllHandler
+
+	UserReadByEmail *query.UserReadByEmailHandler
+	UserReadByID    *query.UserGetByIDHandler
+	UserReadAll     *query.UserReadAllHandler
 }
 
 type Commands struct {
@@ -39,6 +43,10 @@ type Commands struct {
 	EmployeeCreate *command.EmployeeCreateHandler
 	EmployeeUpdate *command.EmployeeUpdateHanlder
 	EmployeeDelete *command.EmployeeDeleteHandler
+
+	UserCreate *command.UserCreateHandler
+	UserUpdate *command.UserUpdateHandler
+	UserDelete *command.UserDeleteHandler
 }
 
 func NewApp() *App {
@@ -53,6 +61,7 @@ func NewApp() *App {
 	}
 
 	db.AutoMigrate(
+		&domain.User{},
 		&domain.BurjoGroup{},
 		&domain.Burjo{},
 		&domain.Employee{},
@@ -61,6 +70,7 @@ func NewApp() *App {
 	burjoGroupRepo := adapter.NewBurjoGroupRepository(db)
 	burjoRepo := adapter.NewBurjoRepository(db)
 	employeeRepo := adapter.NewEmployeeRepository(db)
+	userRepo := adapter.NewUserRepository(db)
 
 	return &App{
 		Queries: Queries{
@@ -72,6 +82,10 @@ func NewApp() *App {
 
 			EmployeeReadByID: query.NewEmployeeReadByID(employeeRepo),
 			EmployeeReadAll:  query.NewEmployeeReadAll(employeeRepo),
+
+			UserReadByEmail: query.NewUserReadByEmail(userRepo),
+			UserReadByID:    query.NewUserGetByID(userRepo),
+			UserReadAll:     query.NewUserReadAll(userRepo),
 		},
 		Commands: Commands{
 			BurjoGroupCreate: command.NewBurjoGroupCreate(burjoGroupRepo),
@@ -85,6 +99,10 @@ func NewApp() *App {
 			EmployeeCreate: command.NewEmployeeCreate(employeeRepo),
 			EmployeeUpdate: command.NewEmployeeUpdate(employeeRepo),
 			EmployeeDelete: command.NewEmployeeDelete(employeeRepo),
+
+			UserCreate: command.NewUserCreate(userRepo),
+			UserUpdate: command.NewUserUpdate(userRepo),
+			UserDelete: command.NewUserDelete(userRepo),
 		},
 	}
 }

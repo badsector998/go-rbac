@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"gorm.io/gorm"
 )
 
@@ -9,6 +10,11 @@ type User struct {
 	ID         uint
 	Name       string
 	Email      string
-	Password   []byte
+	Password   string
 	BurjoGroup BurjoGroup
+}
+
+type Claims struct {
+	jwt.StandardClaims
+	Role string
 }
